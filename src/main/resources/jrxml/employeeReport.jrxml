@@ -5,6 +5,9 @@
               name="employwwReport"
               topMargin="20"
               bottomMargin="20">
+    <style name="default" isDefault="true" hTextAlign="Center" fontName="DejaVu Serif" fontSize="10"/>
+    <style name="small" hTextAlign="Center" fontName="DejaVu Serif" fontSize="6"/>
+    <style name="big" hTextAlign="Center" fontName="DejaVu Serif" fontSize="15"/>
     <parameter name="title"/>
     <parameter name="minSalary" class="java.lang.Double"/>
     <field name="firstName"/>
@@ -14,7 +17,7 @@
     <title>
         <band height="20" splitType="Stretch">
             <textField>
-                <reportElement x="238" y="0" width="100" height="20"/>
+                <reportElement style="big" x="238" y="0" width="100" height="20"/>
                 <textElement/>
                 <textFieldExpression class="java.lang.String">
                     <![CDATA[$P{title}]]>
@@ -24,6 +27,12 @@
     </title>
     <detail>
         <band height="51" splitType="Stretch">
+            <rectangle>
+                <reportElement x="0" y="0" width="300" height="20"/>
+                <graphicElement>
+                    <pen lineWidth="0.25"/>
+                </graphicElement>
+            </rectangle>
             <textField>
                 <reportElement x="0" y="0" width="100" height="20"/>
                 <textElement/>
@@ -39,7 +48,10 @@
                 </textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="300" y="0" width="100" height="20"/>
+                <reportElement style="small" x="200" y="0" width="100" height="20"/>
+                <box padding="3">
+                    <pen lineWidth="0.25"/>
+                </box>
                 <textElement/>
                 <textFieldExpression class="java.lang.String">
                     <![CDATA[$F{salary}]]>

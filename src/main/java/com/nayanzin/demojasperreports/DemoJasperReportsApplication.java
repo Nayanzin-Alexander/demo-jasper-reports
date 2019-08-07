@@ -8,6 +8,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.HtmlExporter;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRRtfExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.export.*;
 import org.springframework.boot.CommandLineRunner;
@@ -52,14 +53,15 @@ public class DemoJasperReportsApplication {
             // Create Bean datasource.
             JRBeanCollectionDataSource object = new JRBeanCollectionDataSource(employeeList);
 
-            // Generate report.
+            // Fill report.
             JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getClassLoader().getResourceAsStream("jasper/employeeReport.jasper"), params, object);
 
-            // Export report to PDF, XLS, CSV, HTML
+            // Export report to PDF, XLS, CSV, HTML, RTF
             exportToPdf(jasperPrint, destination);
             exportToXls(jasperPrint, destination);
             exportToCsv(jasperPrint, destination);
             exportToHtml(jasperPrint, destination);
+            exportToRtf(jasperPrint, destination);
         };
     }
 
@@ -137,6 +139,23 @@ public class DemoJasperReportsApplication {
         exporter.setConfiguration(reportConfiguration);
 
         // Export to HTML.
+        exporter.exportReport();
+    }
+
+    // Export jasper print to World file.
+    private void exportToRtf(JasperPrint jasperPrint, String destination) throws JRException {
+
+        // Create RTF exporter with input and output.
+        JRRtfExporter exporter = new JRRtfExporter();
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        exporter.setExporterOutput(new SimpleWriterExporterOutput(destination + ".rtf"));
+
+        // Config report.
+        SimpleRtfReportConfiguration reportConfiguration = new SimpleRtfReportConfiguration();
+        reportConfiguration.setOffsetY(5);
+        exporter.setConfiguration(reportConfiguration);
+
+        // Export to RTF.
         exporter.exportReport();
     }
 }
